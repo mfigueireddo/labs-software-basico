@@ -1,0 +1,1 @@
+# Repostiório para depositar os laboratórios realizados na aula de Software Básico
