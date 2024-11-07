@@ -11,15 +11,22 @@ float foo (double a, float b) {
 foo:
     pushq %rbp
     movq %rsp, %rbp
-    subq $32, %rsp
-    movsd %xmm0, -8(%rbp)
-    movsd %xmm1, -16(%rbp)
 
-    /* xmm0 = conta 1 // xmm1 = conta 2 */
+    /* xmm2 = conta 1 // xmm1 = conta 3 */
     
-        
+    cvtss2sd %xmm1, %xmm1 /* converte b de float para double */
+    
+    movsd %xmm0, %xmm2 /* move a para 1a conta */
+    addsd %xmm1, %xmm2 /* adiciona b à 1a conta */
 
-    movds -8(%rbp)
-    movds -16(%rbp)
-    ret
+    movsd %xmm0, %xmm3 /* move a para 2a conta */
+    subsd %xmm1, %xmm3 /* subtrai b à 2a conta */ 
+
+    mulsd %xmm2, %xmm3 /* 1a conta * 2a conta */
+
+    cvtsd2ss %xmm3, %xmm3 /* converte o resultado para float */
+
+    movss %xmm3, %xmm0 /* retorna o resultado */
+
     leave
+    ret
